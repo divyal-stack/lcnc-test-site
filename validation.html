@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registration - Local Test Shop</title>
+<style>
+  body { font-family: system-ui, sans-serif; background: #f6f7f9; margin: 0; }
+  main { max-width: 480px; margin: 40px auto; background: #fff; padding: 24px; border-radius: 8px; box-shadow: 0 1px 3px #0001; }
+  label { display: block; margin: 14px 0 4px; font-weight: 600; }
+  input, select { width: 100%; padding: 8px; box-sizing: border-box; }
+  .error { color: #c62828; font-size: 13px; min-height: 16px; margin-top: 4px; }
+  #form-result { margin-top: 16px; font-weight: 600; }
+  #form-result.success { color: #2e7d32; }
+  #form-result.failure { color: #c62828; }
+  button { margin-top: 18px; padding: 10px 16px; }
+</style>
+</head>
+<body>
+<main>
+  <h1 id="page-title">Create your account</h1>
+  <form id="register-form" novalidate>
+    <label for="fullname">Full name</label>
+    <input id="fullname" name="fullname">
+    <div class="error" id="fullname-error"></div>
+
+    <label for="reg-email">Email</label>
+    <input id="reg-email" name="email" type="email">
+    <div class="error" id="email-error"></div>
+
+    <label for="phone">Phone number</label>
+    <input id="phone" name="phone">
+    <div class="error" id="phone-error"></div>
+
+    <label for="age">Age</label>
+    <input id="age" name="age" type="number">
+    <div class="error" id="age-error"></div>
+
+    <label for="reg-password">Password</label>
+    <input id="reg-password" name="password" type="password">
+    <div class="error" id="password-error"></div>
+
+    <label for="confirm-password">Confirm password</label>
+    <input id="confirm-password" name="confirmPassword" type="password">
+    <div class="error" id="confirm-error"></div>
+
+    <label for="plan">Plan</label>
+    <select id="plan" name="plan">
+      <option value="">-- Select a plan --</option><option>Free</option><option>Pro</option><option>Enterprise</option>
+    </select>
+    <div class="error" id="plan-error"></div>
+
+    <button type="submit" id="register-btn">Register</button>
+    <button type="reset" id="reset-btn">Reset</button>
+  </form>
+  <p id="form-result" role="status"></p>
+  <p><a href="index.html">Back to home</a></p>
+</main>
+
+<script>
+  // All user-facing validation text lives here
+  const MESSAGES = {
+    fullnameRequired: 'Full name is required',
+    fullnameShort: 'Full name must be at least 3 characters',
+    emailRequired: 'Email is required',
+    emailInvalid: 'Please enter a valid email address',
+    phoneInvalid: 'Phone number must be exactly 10 digits',
+    ageInvalid: 'You must be between 18 and 99 years old',
+    passwordShort: 'Password must be at least 8 characters',
+    passwordWeak: 'Password must contain at least one number',
+    passwordMismatch: 'Passwords do not match',
+    planRequired: 'Please select a plan',
+    success: 'Registration successful! Welcome aboard.',
+    failure: 'Please fix the errors above and try again.',
+  };
+
+  const $ = (s) => document.querySelector(s);
+  const rules = [
+    ['#fullname-error', () => { const v = $('#fullname').value.trim(); return !v ? MESSAGES.fullnameRequired : v.length < 3 ? MESSAGES.fullnameShort : ''; }],
+    ['#email-error', () => { const v = $('#reg-email').value.trim(); return !v ? MESSAGES.emailRequired : !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? MESSAGES.emailInvalid : ''; }],
+    ['#phone-error', () => /^\d{10}$/.test($('#phone').value.trim()) ? '' : MESSAGES.phoneInvalid],
+    ['#age-error', () => { const a = Number($('#age').value); return a >= 18 && a <= 99 ? '' : MESSAGES.ageInvalid; }],
+    ['#password-error', () => { const v = $('#reg-password').value; return v.length < 8 ? MESSAGES.passwordShort : !/\d/.test(v) ? MESSAGES.passwordWeak : ''; }],
+    ['#confirm-error', () => $('#confirm-password').value === $('#reg-password').value && $('#confirm-password').value ? '' : MESSAGES.passwordMismatch],
+    ['#plan-error', () => $('#plan').value ? '' : MESSAGES.planRequired],
+  ];
+
+  $('#register-form').onsubmit = (e) => {
+    e.preventDefault();
+    let ok = true;
+    for (const [sel, check] of rules) { const msg = check(); $(sel).textContent = msg; if (msg) ok = false; }
+    const result = $('#form-result');
+    result.textContent = ok ? MESSAGES.success : MESSAGES.failure;
+    result.className = ok ? 'success' : 'failure';
+  };
+  $('#register-form').onreset = () => {
+    document.querySelectorAll('.error').forEach(e => e.textContent = '');
+    $('#form-result').textContent = '';
+  };
+</script>
+</body>
+</html>
