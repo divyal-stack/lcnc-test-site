@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Local Test Shop</title>
+<style>
+  body { font-family: system-ui, sans-serif; margin: 0; background: #f6f7f9; color: #222; }
+  header { background: #2b4acb; color: #fff; padding: 12px 24px; display: flex; gap: 20px; align-items: center; }
+  header a { color: #fff; text-decoration: none; }
+  main { max-width: 900px; margin: 24px auto; padding: 0 16px; }
+  section { background: #fff; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; box-shadow: 0 1px 3px #0001; }
+  label { display: block; margin: 10px 0 4px; }
+  input, select, textarea { padding: 6px 8px; width: 100%; max-width: 360px; box-sizing: border-box; }
+  button { padding: 8px 14px; margin: 6px 6px 0 0; cursor: pointer; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid #ddd; padding: 6px 10px; text-align: left; }
+  .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+  .card { border: 1px solid #ddd; border-radius: 6px; padding: 10px; }
+  #toast { position: fixed; bottom: 20px; right: 20px; background: #222; color: #fff; padding: 10px 16px; border-radius: 6px; display: none; }
+  dialog { border-radius: 8px; border: 1px solid #ccc; }
+  .tab-panel { display: none; } .tab-panel.active { display: block; }
+</style>
+</head>
+<body>
+<header>
+  <strong id="logo">Local Test Shop</strong>
+  <a href="index.html" id="nav-home">Home</a>
+  <a href="#products" id="nav-products">Products</a>
+  <a href="#signup" id="nav-signup">Sign up</a>
+  <a href="about.html" id="nav-about">About</a>
+  <span style="margin-left:auto">Cart: <span id="cart-count" data-test="cart-count">0</span></span>
+</header>
+
+<main>
+  <section id="login">
+    <h2>Login</h2>
+    <form id="login-form">
+      <label for="username">Username</label>
+      <input id="username" name="username" data-test="username" placeholder="Enter username">
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" data-test="password" placeholder="Enter password">
+      <button type="submit" id="login-btn" data-test="login-button">Log in</button>
+      <p id="login-msg" role="status"></p>
+    </form>
+    <small>Use <code>test</code> / <code>test123</code></small>
+  </section>
+
+  <section id="products">
+    <h2>Products</h2>
+    <input id="search" placeholder="Search products..." data-test="search">
+    <div class="products" id="product-list"></div>
+  </section>
+
+  <section id="signup">
+    <h2>Sign up</h2>
+    <form id="signup-form">
+      <label for="email">Email</label>
+      <input id="email" type="email" required data-test="email">
+      <label for="country">Country</label>
+      <select id="country" data-test="country">
+        <option value="">-- Select --</option><option>India</option><option>USA</option><option>UK</option>
+      </select>
+      <label>Gender</label>
+      <label><input type="radio" name="gender" value="male" style="width:auto"> Male</label>
+      <label><input type="radio" name="gender" value="female" style="width:auto"> Female</label>
+      <label><input type="radio" name="gender" value="other" style="width:auto"> Other</label>
+      <label for="dob">Date of birth</label>
+      <input id="dob" type="date">
+      <label for="bio">Bio</label>
+      <textarea id="bio" rows="3"></textarea>
+      <label><input type="checkbox" id="terms" style="width:auto"> I accept the terms</label>
+      <button type="submit" id="signup-btn">Create account</button>
+      <p id="signup-msg" role="status"></p>
+    </form>
+  </section>
+
+  <section id="widgets">
+    <h2>Widgets</h2>
+    <div>
+      <button class="tab" data-tab="t1">Tab 1</button>
+      <button class="tab" data-tab="t2">Tab 2</button>
+      <button class="tab" data-tab="t3">Tab 3</button>
+    </div>
+    <div class="tab-panel active" id="t1">Content of tab one.</div>
+    <div class="tab-panel" id="t2">Content of tab two.</div>
+    <div class="tab-panel" id="t3">Content of tab three.</div>
+    <hr>
+    <button id="open-modal">Open modal</button>
+    <button id="alert-btn">Show alert</button>
+    <button id="confirm-btn">Show confirm</button>
+    <button id="delayed-btn">Load after 3s</button>
+    <span id="delayed-text"></span>
+    <hr>
+    <label for="slider">Volume: <span id="slider-val">50</span></label>
+    <input type="range" id="slider" min="0" max="100" value="50">
+    <details><summary id="faq">FAQ: What is this?</summary><p>A local page for testing.</p></details>
+    <label for="upload">Upload a file</label>
+    <input type="file" id="upload">
+    <iframe srcdoc="<p>Inside iframe</p><button id='iframe-btn' onclick=&quot;this.textContent='Clicked'&quot;>Iframe button</button>" style="width:100%;height:80px;border:1px dashed #aaa"></iframe>
+  </section>
+
+  <section id="table-section">
+    <h2>Orders</h2>
+    <table id="orders">
+      <thead><tr><th>ID</th><th>Item</th><th>Status</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td>101</td><td>Laptop</td><td>Shipped</td><td><button class="row-del">Delete</button></td></tr>
+        <tr><td>102</td><td>Phone</td><td>Pending</td><td><button class="row-del">Delete</button></td></tr>
+        <tr><td>103</td><td>Headphones</td><td>Delivered</td><td><button class="row-del">Delete</button></td></tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+
+<dialog id="modal">
+  <h3>Modal title</h3>
+  <p>This is a modal dialog.</p>
+  <button id="close-modal">Close</button>
+</dialog>
+<div id="toast"></div>
+
+<script>
+  const $ = (s) => document.querySelector(s);
+  const el = (tag, props = {}, ...kids) => { const n = Object.assign(document.createElement(tag), props); n.append(...kids); return n; };
+  const toast = (m) => { const t = $('#toast'); t.textContent = m; t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 2000); };
+
+  $('#login-form').onsubmit = (e) => {
+    e.preventDefault();
+    const ok = $('#username').value === 'test' && $('#password').value === 'test123';
+    $('#login-msg').textContent = ok ? 'Welcome, test!' : 'Invalid credentials';
+    $('#login-msg').style.color = ok ? 'green' : 'red';
+  };
+
+  const products = [
+    { id: 1, name: 'Laptop', price: 999 }, { id: 2, name: 'Phone', price: 599 },
+    { id: 3, name: 'Headphones', price: 99 }, { id: 4, name: 'Keyboard', price: 49 },
+    { id: 5, name: 'Monitor', price: 249 }, { id: 6, name: 'Mouse', price: 25 },
+  ];
+  let cart = 0;
+  const render = (q = '') => {
+    const cards = products
+      .filter(p => p.name.toLowerCase().includes(q.toLowerCase()))
+      .map(p => {
+        const card = el('div', { className: 'card' },
+          el('h4', { textContent: p.name }),
+          el('p', { textContent: `$${p.price}` }),
+          el('button', { className: 'add-cart', id: `add-${p.id}`, textContent: 'Add to cart' }));
+        card.dataset.test = `product-${p.id}`;
+        return card;
+      });
+    $('#product-list').replaceChildren(...cards);
+  };
+  render();
+  $('#search').oninput = (e) => render(e.target.value);
+  $('#product-list').onclick = (e) => {
+    if (e.target.classList.contains('add-cart')) { $('#cart-count').textContent = ++cart; toast('Added to cart'); }
+  };
+
+  $('#signup-form').onsubmit = (e) => {
+    e.preventDefault();
+    if (!$('#terms').checked) { $('#signup-msg').textContent = 'Please accept the terms'; return; }
+    $('#signup-msg').textContent = `Account created for ${$('#email').value}`;
+  };
+
+  document.querySelectorAll('.tab').forEach(b => b.onclick = () => {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    $('#' + b.dataset.tab).classList.add('active');
+  });
+  $('#open-modal').onclick = () => $('#modal').showModal();
+  $('#close-modal').onclick = () => $('#modal').close();
+  $('#alert-btn').onclick = () => alert('Hello from alert!');
+  $('#confirm-btn').onclick = () => toast(confirm('Are you sure?') ? 'Confirmed' : 'Cancelled');
+  $('#delayed-btn').onclick = () => { $('#delayed-text').textContent = 'Loading...'; setTimeout(() => $('#delayed-text').textContent = 'Loaded!', 3000); };
+  $('#slider').oninput = (e) => $('#slider-val').textContent = e.target.value;
+  $('#orders').onclick = (e) => { if (e.target.classList.contains('row-del')) e.target.closest('tr').remove(); };
+</script>
+</body>
+</html>
