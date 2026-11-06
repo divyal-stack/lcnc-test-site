@@ -45,7 +45,7 @@
       </select>
     </div>
     <div class="field-sm">
-      <input type="button" class="action" id="wq-submit" value="Create task">
+      <input type="button" class="action" id="wq-submit" value="Add task">
     </div>
   </section>
 
@@ -53,7 +53,7 @@
 
   <footer>
     <div>
-      <strong id="wq-remaining">0 tasks left</strong>
+      <strong id="wq-remaining">0 to-dos left</strong>
     </div>
     <div>
       <input type="button" class="action" id="wq-sweep" value="Clear done tasks">
@@ -93,7 +93,7 @@
       return row;
     }));
     const left = tasks.filter(t => !t.done).length;
-    $('#wq-remaining').textContent = `${left} task${left === 1 ? '' : 's'} left`;
+    $('#wq-remaining').textContent = `${left} to-do${left === 1 ? '' : 's'} left`;
   };
 
   const add = () => {
