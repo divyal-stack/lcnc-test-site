@@ -61,17 +61,17 @@
   // All user-facing validation text lives here
   const MESSAGES = {
     fullnameRequired: 'Full name is mandatory',
-    fullnameShort: 'Full name must be at least 3 characters',
+    fullnameShort: 'Name is too short — use 3+ letters',
     emailRequired: 'Email is required',
-    emailInvalid: 'Please enter a valid email address',
-    phoneInvalid: 'Phone number must be 10 digits',
-    ageInvalid: 'You must be between 18 and 99 years old',
-    passwordShort: 'Password must have at least 8 characters',
+    emailInvalid: 'That email does not look right',
+    phoneInvalid: 'Enter a ten-digit phone number',
+    ageInvalid: 'Age needs to be 18 to 99',
+    passwordShort: 'Password is too short (min 8 chars)',
     passwordWeak: 'Password must contain at least one number',
-    passwordMismatch: 'Passwords don\'t match',
+    passwordMismatch: 'Those entries do not match',
     planRequired: 'Please choose a plan',
-    success: 'Registration finished! Welcome aboard.',
-    failure: 'Please correct the errors above and try again.',
+    success: 'All set — your account is ready.',
+    failure: 'Please fix the highlighted fields below.',
   };
 
   const $ = (s) => document.querySelector(s);
